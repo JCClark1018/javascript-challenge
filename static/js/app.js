@@ -18,26 +18,38 @@ ufoData.forEach(function(ufoTable) {
     });
   });
 
-  //button
-  var button = d3.select("#filter-btn")
+//button
+var button = d3.select("#filter-btn");
 
-  //event handler on button click
-  button.on("click", buttonClick)
+//event handler on button click
+button.on("click", buttonClick);
 
   //create function for event
-  function buttonClick() {
+function buttonClick() {
         
-    //prevent refresh and clear table per requirements
-    d3.event.preventDefault();
-    tbody.html("");
+  //prevent refresh and clear table per requirements
+  d3.event.preventDefault();
+  tbody.html("");
 
-    //select input and get HTML node
-    var dateInput = d3.select("#datetime");
-    
-    //get data value from each input
-    var dateData = dateInput.property("value");
-   
-    //prove it
-    console.log(dateData);
+  //select input and get HTML node
+  var dateInput = d3.select("#datetime");
 
+  //get data value from input
+  var dateData = dateInput.property("value");
+
+  //print it
+  console.log(dateData);
+
+  //filter the data
+  var filteredufoData = ufoData.filter(
+    sighted => sighted.datetime === dateData); 
+  console.log (filteredufoData);
+
+  filteredufoData.forEach(function(ufoSearch) {
+    var row = tbody.append("tr");
+    Object.entries(ufoSearch).forEach(function([key, value]) {
+      var cell = row.append("td");
+      cell.text(value);
+    });
+  });
 }
